@@ -1,0 +1,16 @@
+---
+- import_tasks: pre_requisite.yml
+- include_tasks: packages.yml
+  when:
+  - "hostvars[inventory_hostname]['cpupower'] is defined"
+  - "hostvars[inventory_hostname]['cpupower'] != ''"
+  - "hostvars[inventory_hostname]['cpupower'] |
+     json_query(vars['cpupower_install_package']) is defined"
+  - "hostvars[inventory_hostname]['cpupower'] |
+     json_query(vars['cpupower_install_package']) == 'true'"
+  vars:
+    cpupower_install_package: "[] | map(&install_package || 'false', @) | [0]"
+- include_tasks: deploy_cpupower.yml
+  when:
+  - "vars['cpupower_instance_settings'] is defined"
+  - "vars['cpupower_instance_settings'] != []"

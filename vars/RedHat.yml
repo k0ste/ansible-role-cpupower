@@ -1,0 +1,4 @@
+---
+cpupower_package: 'kernel-tools'
+cpupower_service: 'cpupower'
+cpupower_conf_dest: '/etc/sysconfig/cpupower'

@@ -1,0 +1,4 @@
+---
+cpupower_package: 'cpufrequtils'
+cpupower_service: 'cpufrequtils'
+cpupower_conf_dest: '/etc/default/cpufrequtils'

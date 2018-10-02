@@ -1,0 +1,19 @@
+{{ '## cpupower' }}
+{{ '# ' + ansible_managed }}
+{{ '# Do not edit manually' }}
+
+{{ 'CPUPOWER_START_OPTS' + '=\"' + 'frequency-set' -}}
+{% for c in vars['cpupower_instance_settings'] %}
+{% if c.governor is defined and c.governor in ['ondemand', 'performance',
+                                'powersave', 'conservative', 'userspace'] %}
+{{ ' ' ~ '-g' ~ ' ' ~ c.governor -}}
+{% endif %}
+{% if c.min_freq is defined and c.min_freq != '' %}
+{{ ' ' ~ '-d' ~ ' ' ~ c.min_freq -}}
+{% endif %}
+{% if c.max_freq is defined and c.max_freq != '' %}
+{{ ' ' ~ '-u' ~ ' ' ~ c.max_freq -}}
+{% endif %}
+{% endfor %}
+{{ '\"' }}
+{{ '' }}

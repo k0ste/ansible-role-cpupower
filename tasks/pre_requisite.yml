@@ -1,0 +1,21 @@
+---
+- name: cpupower | Assert that ansible facts gathered successfully
+  assert:
+    that:
+    - "hostvars[inventory_hostname]['ansible_service_mgr'] is defined"
+    msg: "'ansible_facts' not found. Please enable facts gathering."
+- name: cpupower | Assert that system manager is systemd
+  assert:
+    that:
+    - "hostvars[inventory_hostname]['ansible_service_mgr'] == 'systemd'"
+    msg: "System manager is not systemd."
+- name: cpupower | Add the OS specific variables
+  include_vars: "{{ hostvars[inventory_hostname]['ansible_os_family'] +
+                    '.yml' }}"
+- name: cpupower | Set facts about cpupower role
+  set_fact:
+    cpupower_instance_settings: "{{ hostvars[inventory_hostname]['cpupower'] |
+      json_query('[].settings[]') }}"
+  when:
+  - "hostvars[inventory_hostname]['cpupower'] is defined"
+  - "hostvars[inventory_hostname]['cpupower'] != ''"

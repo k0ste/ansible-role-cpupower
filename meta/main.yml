@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: "Konstantin Shalygin <k0ste@k0ste.ru>"
+  issue_tracker_url: "http://jira.opentech.local/secure/Dashboard.jspa"
+  description: "Linux kernel tool to tune CPU power saving related features."
+  company: "LLC Open Technologies"
+  license: "GPL"
+  min_ansible_version: "2.5"
+  platforms:
+  - name: GenericUNIX
+    versions:
+    - any
+  categories:
+  - system
+dependencies: []

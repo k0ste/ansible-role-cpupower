@@ -1,0 +1,4 @@
+---
+cpupower_package: 'cpupower'
+cpupower_service: 'cpupower'
+cpupower_conf_dest: '/etc/default/cpupower'
