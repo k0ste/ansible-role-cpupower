@@ -4,7 +4,7 @@ Linux kernel tool to tune CPU power saving related features.
 
 ## Requirements
 
-* Ansible 2.5+;
+* Ansible 2.8+;
 
 ## Example configuration
 
