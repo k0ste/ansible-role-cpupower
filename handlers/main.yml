@@ -1,14 +1,14 @@
 ---
 - name: Restart cpupower
-  systemd:
+  ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['cpupower_service'] }}"
     state: "restarted"
   when:
-  - "hostvars[inventory_hostname]['cpupower'] is defined"
-  - "hostvars[inventory_hostname]['cpupower'] != ''"
-  - "hostvars[inventory_hostname]['cpupower'] |
-     json_query(vars['cpupower_restart']) is defined"
-  - "hostvars[inventory_hostname]['cpupower'] |
-     json_query(vars['cpupower_restart']) == 'true'"
+    - "hostvars[inventory_hostname]['cpupower'] is defined"
+    - "hostvars[inventory_hostname]['cpupower'] != ''"
+    - "hostvars[inventory_hostname]['cpupower'] |
+       community.general.json_query(vars['cpupower_restart']) is defined"
+    - "hostvars[inventory_hostname]['cpupower'] |
+       community.general.json_query(vars['cpupower_restart']) == 'true'"
   vars:
     cpupower_restart: "[] | map(&restart || 'false', @) | [0]"

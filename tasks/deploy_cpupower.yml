@@ -1,22 +1,24 @@
 ---
 - name: cpupower | Deploy cpupower configuration
-  template:
+  ansible.builtin.template:
     src: "{{ 'cpupower_' + hostvars[inventory_hostname]['ansible_os_family'] +
-             '.j2' }}"
+      '.j2' }}"
     dest: "{{ hostvars[inventory_hostname]['cpupower_conf_dest'] }}"
     owner: "root"
     group: "root"
     mode: "0644"
   notify:
-  - "Restart cpupower"
+    - "Restart cpupower"
 - name: cpupower | Enable cpupower service
-  systemd:
+  ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['cpupower_service'] }}"
     enabled: "yes"
   when:
-  - "hostvars[inventory_hostname]['cpupower'] |
-     json_query(vars['cpupower_enable']) is defined"
-  - "hostvars[inventory_hostname]['cpupower'] |
-     json_query(vars['cpupower_enable']) == 'true'"
+    - "hostvars[inventory_hostname]['cpupower'] is defined"
+    - "hostvars[inventory_hostname]['cpupower'] != ''"
+    - "hostvars[inventory_hostname]['cpupower'] |
+       community.general.json_query(vars['cpupower_enable']) is defined"
+    - "hostvars[inventory_hostname]['cpupower'] |
+       community.general.json_query(vars['cpupower_enable']) == 'true'"
   vars:
     cpupower_enable: "[] | map(&enable || 'false', @) | [0]"
