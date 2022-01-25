@@ -1,5 +1,5 @@
 ---
-- name: cpupower | Deploy cpupower configuration
+- name: "cpupower | Deploy cpupower configuration"
   ansible.builtin.template:
     src: "{{ 'cpupower_' + hostvars[inventory_hostname]['ansible_os_family'] +
       '.j2' }}"
@@ -9,7 +9,7 @@
     mode: "0644"
   notify:
     - "Restart cpupower"
-- name: cpupower | Enable cpupower service
+- name: "cpupower | Enable cpupower service"
   ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['cpupower_service'] }}"
     enabled: "yes"

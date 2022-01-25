@@ -2,7 +2,7 @@
 {{ '# ' + ansible_managed }}
 {{ '# Do not edit manually' }}
 
-{% for c in vars['cpupower_instance_settings'] %}
+{% for c in vars['cpupower_settings'] %}
 {% if c.governor is defined and c.governor in ['ondemand', 'performance',
   'powersave', 'conservative', 'userspace'] %}
 {{ 'governor' + '=\"' + c.governor + '\"' }}

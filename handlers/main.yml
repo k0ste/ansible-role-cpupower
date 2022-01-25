@@ -12,3 +12,4 @@
        community.general.json_query(vars['cpupower_restart']) == 'true'"
   vars:
     cpupower_restart: "[] | map(&restart || 'false', @) | [0]"
+  ignore_errors: "true"

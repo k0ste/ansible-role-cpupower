@@ -3,7 +3,7 @@
 {{ '# Do not edit manually' }}
 
 {{ 'ENABLE="true"' }}
-{% for c in vars['cpupower_instance_settings'] %}
+{% for c in vars['cpupower_settings'] %}
 {% if c.governor is defined and c.governor in ['ondemand', 'performance',
   'powersave', 'conservative', 'userspace'] %}
 {{ 'GOVERNOR' + '=\"' + c.governor + '\"' }}
