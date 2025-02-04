@@ -1,7 +1,9 @@
 ---
-- ansible.builtin.import_tasks:
+- name: "cpupower | Include pre requisite tasks"
+  ansible.builtin.import_tasks:
     file: "pre_requisite.yml"
-- ansible.builtin.include_tasks:
+- name: "cpupower | Include packages tasks"
+  ansible.builtin.include_tasks:
     file: "packages.yml"
   when:
     - "hostvars[inventory_hostname]['cpupower'] is defined"
@@ -14,8 +16,9 @@
        'true'"
   vars:
     cpupower_install_package: "[] | map(&install_package || 'false', @) | [0]"
-- ansible.builtin.include_tasks:
-    file: "deploy_cpupower.yml"
+- name: "cpupower | Include deployment tasks"
+  ansible.builtin.import_tasks:
+    file: "deploy.yml"
   when:
     - "vars['cpupower_settings'] is defined"
     - "vars['cpupower_settings'] != []"

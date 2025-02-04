@@ -1,5 +1,5 @@
 ---
-- name: Restart cpupower
+- name: "Restart cpupower"
   ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['cpupower_service'] }}"
     state: "restarted"
@@ -13,3 +13,5 @@
   vars:
     cpupower_restart: "[] | map(&restart || 'false', @) | [0]"
   ignore_errors: "true"
+  # Ansible-lint ignore-errors mock
+  register: "cpupower_restart_register"

@@ -3,13 +3,13 @@
   ansible.builtin.assert:
     that:
       - "hostvars[inventory_hostname]['ansible_service_mgr'] is defined"
-    msg: "'ansible_facts' not found. Please enable facts gathering"
+    fail_msg: "'ansible_facts' not found. Please enable facts gathering"
     quiet: "true"
 - name: "cpupower | Assert that system manager is systemd"
   ansible.builtin.assert:
     that:
       - "hostvars[inventory_hostname]['ansible_service_mgr'] == 'systemd'"
-    msg: "System manager is not systemd"
+    fail_msg: "System manager is not systemd"
     quiet: "true"
 - name: "cpupower | Add the OS specific variables"
   ansible.builtin.include_vars:
