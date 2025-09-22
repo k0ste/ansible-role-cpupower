@@ -1,22 +1,35 @@
 ---
 - name: "cpupower | Install the required packages in Redhat derivatives"
-  ansible.builtin.dnf:
-    name: "{{ hostvars[inventory_hostname]['cpupower_package'] }}"
-    state: "{{ vars['cpupower_package_state'] | default(omit) }}"
-    update_cache: "yes"
   when:
     - "hostvars[inventory_hostname]['ansible_os_family'] == 'RedHat'"
+  block:
+    - name: "cpupower | Update dnf cache"
+      ansible.builtin.dnf:
+        update_cache: "yes"
+    - name: "cpupower | Install package with dnf"
+      ansible.builtin.dnf:
+        name: "{{ hostvars[inventory_hostname]['cpupower_package'] }}"
+        state: "{{ vars['cpupower_package_state'] | default(omit) }}"
 - name: "cpupower | Install the required packages in Debian derivatives"
-  ansible.builtin.apt:
-    name: "{{ hostvars[inventory_hostname]['cpupower_package'] }}"
-    state: "{{ vars['cpupower_package_state'] | default(omit) }}"
-    update_cache: "yes"
   when:
     - "hostvars[inventory_hostname]['ansible_os_family'] == 'Debian'"
-- name: "cpupower | Install the required packages in ArchLinux derivatives"
-  community.general.pacman:
-    name: "{{ hostvars[inventory_hostname]['cpupower_package'] }}"
-    state: "{{ vars['cpupower_package_state'] | default(omit) }}"
-    update_cache: "yes"
+  block:
+    - name: "cpupower | Update apt cache"
+      ansible.builtin.apt:
+        update_cache: "yes"
+    - name: "cpupower | Install package with apt"
+      ansible.builtin.apt:
+        name: "{{ hostvars[inventory_hostname]['cpupower_package'] }}"
+        state: "{{ vars['cpupower_package_state'] | default(omit) }}"
+- name: "cpupower | Install the required packages in ArchLinux
+    derivatives"
   when:
     - "hostvars[inventory_hostname]['ansible_os_family'] == 'Archlinux'"
+  block:
+    - name: "cpupower | Update pacman cache"
+      community.general.pacman:
+        update_cache: "yes"
+    - name: "cpupower | Install package with pacman"
+      community.general.pacman:
+        name: "{{ hostvars[inventory_hostname]['cpupower_package'] }}"
+        state: "{{ vars['cpupower_package_state'] | default(omit) }}"

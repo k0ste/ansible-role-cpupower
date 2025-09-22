@@ -22,19 +22,24 @@
       community.general.json_query('[].package_state | [0]') | default(omit) }}"
   when:
     - "hostvars[inventory_hostname]['cpupower'] is defined"
+    - "hostvars[inventory_hostname]['cpupower'] != []"
     - "hostvars[inventory_hostname]['cpupower'] != ''"
+    - "hostvars[inventory_hostname]['cpupower'] != None"
 - name: "cpupower | Assert that cpupower package state in valid value"
   ansible.builtin.assert:
     that:
       - "vars['cpupower_package_state'] in ['present', 'latest']"
-    msg: "'package_state' must be in 'present' or 'latest'"
+    fail_msg: "'package_state' must be in 'present' or 'latest'"
     quiet: "true"
   when:
     - "vars['cpupower_package_state'] is defined"
+    - "vars['cpupower_package_state'] != []"
     - "vars['cpupower_package_state'] != ''"
+    - "vars['cpupower_package_state'] != None"
 - name: "cpupower | Assert that cpupower package state in valid value"
   ansible.builtin.set_fact:
     cpupower_package_state: 'present'
   when:
     - "vars['cpupower_package_state'] is defined"
-    - "vars['cpupower_package_state'] == ''"
+    - "(vars['cpupower_package_state'] == '' or
+      vars['cpupower_package_state'] == None)"
