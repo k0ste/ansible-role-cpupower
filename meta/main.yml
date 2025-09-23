@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "network_scripts"
+  role_name: "cpupower"
   namespace: "none"
   author: "Konstantin Shalygin <k0ste@k0ste.ru>"
   issue_tracker_url: "https://github.com/k0ste/ansible-role-cpupower"
@@ -10,6 +10,9 @@ galaxy_info:
   min_ansible_version: "3.0.0"
   platforms:
     - name: "EL"
+      versions:
+        - 'all'
+    - name: "ArchLinux"
       versions:
         - 'all'
   galaxy_tags:
